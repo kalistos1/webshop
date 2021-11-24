@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Majestic Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'dashboard/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/vendors/base/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="{% static 'dashboard/vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'dashboard/images/favicon.png' %}" />
+</head>
+<body>
+  <div class="container-scroller">
+<!-- partial:partials/_navbar.html -->
+{% include 'partials/_dnavbar.html' %}
+<!-- partial -->
+
+<div class="container-fluid page-body-wrapper">
+  {% if request.user.is_authenticated and request.user.is_superuser%}
+<!-- partial:partials/_sidebar.html -->
+{% include 'partials/_dsidebar.html' %}
+<!-- partial -->
+    
+<div class="main-panel">
+{% block content %}
+
+
+{% endblock %}
+<!-- partial:partials/_footer.html -->
+{% include 'partials/_dfooter.html' %}
+<!-- partial -->
+</div> 
+{% endif %}
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<!-- plugins:js -->
+<script src="{% static 'dashboard/vendors/base/vendor.bundle.base.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="{% static 'dashboard/vendors/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'dashboard/vendors/datatables.net/jquery.dataTables.js' %}"></script>
+<script src="{% static 'dashboard/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{% static 'dashboard/js/off-canvas.js' %}"></script>
+<script src="{% static 'dashboard/js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'dashboard/js/template.js' %}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+<script src="{% static 'dashboard/js/data-table.js' %}"></script>
+<script src="{% static 'dashboard/js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'dashboard/js/dataTables.bootstrap4.js' %}"></script>
+<!-- End custom js for this page-->
+</body>
+
+</html>
+

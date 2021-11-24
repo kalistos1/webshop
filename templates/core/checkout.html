@@ -1,0 +1,228 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Check Out</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <a href="./shop.html">Shop</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form" id="form-wrapper">
+            <form id="form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <h6 class="checkout__title">Place Order</h6>
+                        <div class="row" id="user-info">
+
+                            <div class="col-lg-12">
+                                <div class="checkout__input">
+                                    <p>Name<span>*</span></p>
+                                    <input type="text" name="name" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p> Whatsapp Phone<span>*</span></p>
+                                    <input type="text" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Valid Email Address<span>*</span></p>
+                                    <input type="text" name="email" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="shipping-info">
+                            <div class="checkout__input">
+                                <p>Country<span>*</span></p>
+                                <input type="text" name="country" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Address<span>*</span></p>
+                                <input type="text" placeholder="home Address" class="checkout__input__add"
+                                    name="address" required>
+
+                            </div>
+                            <div class="checkout__input">
+                                <p>Town/City<span>*</span></p>
+                                <input type="text" name="city" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>State<span>*</span></p>
+                                <input type="text" name="state" required>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Postcode / ZIP<span>*</span></p>
+                                <input type="text" name="zipcode" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4 class="order__title">Your order</h4>
+                            <div class="checkout__order__products">Product <span>Total</span></div>
+                            <ul class="checkout__total__products">
+
+                                {% for item in items %}
+                                <li>{{item.product.title}} <span>#{{item.get_total|floatformat:2}}</span></li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="checkout__total__all">
+                                <li>Subtotal <span>#{{order.get_cart_total|floatformat:2}}</span></li>
+                                <li>Total <span>#{{order.get_cart_total|floatformat:2}}</span></li>
+                            </ul>
+                            <!-- submit buttons -->
+                            <input id="form-button" class="btn btn-success btn-block " type="submit" value="Continue">
+                            <br>
+                            <div class="box-element d-none" id="payment-info">
+                                <button id="make-payment" class="btn btn-info btn-block" data-toggle="modal"
+                                data-target="#orderModal">Place Order</button>
+                                <div id="paypal-button-container"></div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade bg-secondary" id="orderModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <img class="img-fluid mx-auto d-block " src="{% static 'img/14882.gif' %}">
+                                            <p>your Order is being Processed</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--modal ends-->
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var shipping = '{{order.shipping}}'
+    var total = '{{order.get_cart_total}}'
+
+
+
+
+    if (shipping == 'False') {
+        document.getElementById('shipping-info').innerHTML = ''
+    }
+
+    if (user != 'AnonymousUser') {
+        document.getElementById('user-info').innerHTML = ''
+    }
+
+    if (shipping == 'False' && user != 'AnonymousUser') {
+        //Hide entire form if user is logged in and shipping is false
+        document.getElementById('form-wrapper').classList.add("hidden");
+        //Show payment if logged in user wants to buy an item that does not require shipping
+        document.getElementById('payment-info').classList.remove("hidden");
+    }
+
+
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function (e) {
+        e.preventDefault()
+        console.log('Form Submitted...')
+        document.getElementById('form-button').classList.add("d-none");
+        document.getElementById('payment-info').classList.remove("d-none");
+    })
+
+
+
+    document.getElementById('make-payment').addEventListener('click', function (e) {
+        submitFormData()
+
+    })
+
+
+    function submitFormData() {
+        console.log('Payment button clicked')
+
+        var userFormData = {
+            'name': null,
+            'email': null,
+            'phone': null,
+            'total': total,
+        }
+
+        var shippingInfo = {
+            'country': null,
+            'address': null,
+            'city': null,
+            'state': null,
+            'zipcode': null,
+        }
+
+
+
+        if (shipping != 'False') {
+            shippingInfo.country = form.country.value
+            shippingInfo.address = form.address.value
+            shippingInfo.city = form.city.value
+            shippingInfo.state = form.state.value
+            shippingInfo.phone = form.phone.value
+            shippingInfo.zipcode = form.zipcode.value
+        }
+
+        if (user == 'AnonymousUser') {
+            userFormData.name = form.name.value
+            userFormData.phone = form.phone.value
+            userFormData.email = form.email.value
+        }
+
+
+        console.log('Shipping Info:', shippingInfo)
+        console.log('User Info:', userFormData)
+
+        var url = "/process_order/"
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'applicaiton/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'form': userFormData, 'shipping': shippingInfo }),
+
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data);
+                alert('Transaction completed pls check your Email');
+
+                cart = {}
+                document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+                window.location.href = "{% url 'store' %}"
+
+            })
+    }
+</script>
+<!-- Checkout Section End -->
+
+{% endblock %}

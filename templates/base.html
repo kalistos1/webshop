@@ -1,0 +1,341 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'vendor/css/style.css' %}" type="text/css">
+
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+
+        function getCookie(name) {
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(";");
+
+            // Loop through the array elements
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+
+                /* Removing whitespace at the beginning of the cookie name
+                and compare it with the given string */
+                if (name == cookiePair[0].trim()) {
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            // Return null if not found
+            return null;
+        }
+        var cart = JSON.parse(getCookie('cart'))
+
+        if (cart == undefined) {
+            cart = {}
+            console.log('Cart Created!', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart:', cart)
+
+    </script>
+    <style>
+        .django-ckeditor-widget {
+            width: 100%;
+        }
+
+        #info {
+            display: none;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .shop__sidebar__accordion .card-heading a {
+                color: #111111;
+                font-size: 12px;
+                font-weight: 700;
+                text-transform: uppercase;
+                display: block;
+            }
+
+            .shop__sidebar__categories ul li a,
+            .shop__sidebar__price ul li a,
+            .shop__sidebar__brand ul li a {
+                color: #504e4e;
+                font-size: 12px;
+            }
+
+            .shop__sidebar__size label {
+                color: #111111;
+                font-size: 13px;
+                font-weight: 600;
+                border: 1px solid #e5e5e5;
+                padding: 6px 12px;
+                margin-right: 0px;
+
+            }
+
+            .shop__sidebar__categories ul,
+            .shop__sidebar__price ul,
+            .shop__sidebar__brand ul {
+                height: 100px;
+            }
+
+            .spad {
+                padding-top: 50px;
+                padding-bottom: 100px;
+            }
+
+            .shop__sidebar__search form button {
+                color: #b7b7b7;
+                font-size: 15px;
+                right: 0;
+                padding: 0 15px;
+                top: 0;
+                margin-top: 43%;
+                height: 42px;
+            }
+
+            #info {
+                display: block;
+                height: 40px;
+                position: fixed;
+                bottom: 0.2%;
+                width: 100%;
+                font-size: 16px;
+
+            }
+
+            .bottom-cart {
+                padding-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+            <a href="#"><img src="img/icon/heart.png" alt=""></a>
+
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>Free shipping, 30-day return or refund guarantee.</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>Free shipping, 30-day return or refund guarantee.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-sm-6 col-6">
+                    <div class="header__logo ">
+
+                        <a href="{% url 'store' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                    <div class="">
+                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                        <div class="form-inline  my-lg-0">
+                            <div data-toggle="modal" data-target="#Modal">
+                                <a href="{% url 'cart' %}">
+                                    <img id="cart-icon" src="{% static 'img/cart.png' %}" width=40px>
+                                    <span
+                                        style="font-size: 16px; margin-left:-10px; margin-top: -20px; border-radius: 80px; padding:5px;"
+                                        class="text-light bg-danger" id="cart-total">{{order.get_cart_items}} </span>
+                                </a>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade bg-secondary" id="Modal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <img class="img-fluid mx-auto d-block " src="{% static 'img/14882.gif' %}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                    {% url 'store' as store %}
+                    {% url 'about' as about %}
+                    {% url 'contact' as contact %}
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="{% if request.path == store %} active {% endif %}"><a
+                                    href="{% url 'store' %}">Shop</a></li>
+                            <li class="{% if request.path == about %} active {% endif %}"><a
+                                    href="{% url 'about' %}">About Us</a></li>
+                            <li class="{% if request.path == contact %} active {% endif %}"><a
+                                    href="{% url 'contact' %}">Contacts</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="{% static 'img/footer-logo.png' %}" alt=""></a>
+                        </div>
+                        <p>The customer is at the heart of our unique business model, which includes design.</p>
+                        <a href="#"><img src="{% static 'img/payment.png ' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6 col-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="#">Clothing Store</a></li>
+                            <li><a href="#">Trending Shoes</a></li>
+                            <li><a href="#">Accessories</a></li>
+                            <li><a href="#">Sale</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <div class="footer__widget">
+                        <h6>Shopping</h6>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Payment Methods</a></li>
+                            <li><a href="#">Delivary</a></li>
+                            <li><a href="#">Return & Exchanges</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6 col-6">
+                    <div class="footer__widget">
+                        <h6>NewLetter</h6>
+                        <div class="footer__newslatter">
+                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit"><span class="icon_mail_alt"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>Copyright ©
+                            {% now "Y" %}
+                            All rights reserved | powered with love <i class="fa fa-heart-o" aria-hidden="true"></i> by
+                            <a href="https://lustervs.com" target="_blank">Lustervs</a>
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'vendor/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'vendor/js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'vendor/js/mixitup.min.js' %}"></script>
+    <script src="{% static 'vendor/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'vendor/js/cart.js' %}"></script>
+    <script src="{% static 'vendor/js/main.js' %}"></script>
+</body>
+
+</html>

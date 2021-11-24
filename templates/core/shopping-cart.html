@@ -1,0 +1,104 @@
+{% extends 'base.html'%}
+{% load static %}
+   {% block content %}
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Shopping Cart</h4>
+                        <div class="breadcrumb__links">
+                            <a href="{% url 'store' %}">Shop</a>        
+                            <span>Shopping Cart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <!-- cart items-->
+                               {% for item in items %}
+                                <tr>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                            <img src="{{item.product.imageURL}}" alt="" height="100px" width="120px">
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6>{{item.product.title}}</h6>
+                                            <h5>#{{item.product.price|floatformat:2}}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                       
+                                       <div>
+                                        <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'img/arrow-up.png' %}" width="15px">
+					                    <p class="quantity">{{item.quantity}}</p>
+                                        <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'img/arrow-down.png' %}" width="15px">
+                                       </div>
+                                    </td>
+                                    <td class="cart__price">#{{item.get_total}}</td>
+                                    <td class="cart__close"><i class="fa fa-close"></i></td>
+                                </tr>
+                                {% endfor %}
+                           <!-- end cart items-->
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                   
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart__discount">
+                        <h6>Discount codes</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Coupon code">
+                            <button type="submit">Apply</button>
+                        </form>
+                    </div>
+                    <div class="cart__total">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>Total Items <span>{{order.get_cart_items}} </span></li>
+                            <li>Total Amount <span>#{{order.get_cart_total|floatformat:2}}</span></li>
+                        </ul>
+                        <div  data-toggle="modal" data-target="#checkoutModal">
+                        <a href="{% url 'checkout' %}" class="primary-btn " >Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+<div class="modal fade bg-secondary" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <img class="img-fluid mx-auto d-block " src="{% static 'img/14882.gif' %}">
+            <p  class="text-center"> proceeding to cart checkout</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
+    {% endblock %}

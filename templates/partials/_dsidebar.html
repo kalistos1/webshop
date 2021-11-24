@@ -1,0 +1,34 @@
+{% url 'dashboard' as dashboard %}
+{% url 'allproduct' as allproduct %}
+{% url 'addproductcolor' as addproductcolor %}
+{% url 'addproduct' as addproduct %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item {% if request.path == dashboard %} active {% endif %}">
+            <a class="nav-link" href="{%  url 'dashboard' %}">
+              <i class="mdi mdi-home menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+         
+          <li class="nav-item {% if request.path == allproduct %} active {% endif %}">
+            <a class="nav-link" href="{% url 'allproduct' %}">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">all products</span>
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == addproductcolor %} active {% endif %}">
+            <a class="nav-link" href="{% url 'addproductcolor' %}">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Add product acc</span>
+            </a>
+          </li>
+          <li class="nav-item {% if request.path == addproduct %} active {% endif %}">
+            <a class="nav-link" href="{% url 'addproduct' %}">
+              <i class="mdi mdi-grid-large menu-icon"></i>
+              <span class="menu-title">Add product</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>

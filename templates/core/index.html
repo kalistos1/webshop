@@ -1,0 +1,191 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shop</h4>
+                    <div class="breadcrumb__links">
+                        <a href="./index.html">Home</a>
+                        <span>Shop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <!-- shop filter side bar-->
+            {% include '../partials/_filter_sidebar.html' %}
+            <!-- ship filter side bar ends-->
+            <div class="col-lg-9 col-sm-9 col-9 ">
+                <div class="shop__product__option">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__sidebar__search">
+                                <nav class="navbar ">
+                                    <form action="{% url 'searchproduct' %}" class="form-inline">
+                                        <div class="d-flex flex-row">
+                                            {% csrf_token %}
+                                            <div>
+                                                {{search_form}}
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-secondary text-light form-control"
+                                                    type="submit">search</span></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </nav>
+
+                            </div>
+                            <div class="shop__product__option__left">
+                                <p>Showing 1–12 of results</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row ">
+                    {% for product in page.object_list %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 ">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{{product.imageURL}}">
+                                <ul class="product__hover">
+                                    <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
+                                    <li><a href="#"><img src="{% static 'img/icon/compare.png' %}" alt="">
+                                            <span>Compare</span></a>
+                                    </li>
+                                    <li><a href="#"><img src="{% static 'img/icon/search.png' %}" alt=""></a></li>
+                                </ul>
+                            </div>
+                            <div class="">
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <h6 style="font-weight:700; margin-top:20px; font-size:20px;">{{product.title}}
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <h5 class="text-danger" style="font-weight:700;"># {{product.price}} </h5>
+                                    </div>
+
+                                    <div class="col-12 d-flex">
+
+                                        <a href="#"
+                                            class="update-cart text-decoration-none text-light fs-4 btn btn-block"
+                                            style="font-weight:600;" data-product="{{product.id}}" data-action="add">
+                                            <button class="btn btn-success btn-block" data-toggle="modal"
+                                                data-target="#cartModal"> + Add To
+                                                Cart </button></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__pagination">
+                            {% if page.has_other_pages %}
+                            <ul class="pagination">
+                                {% if page.has_previous %}
+                                <li class="page-item ">
+                                    <a href="?page={{page.previous_page_number}}" class="page-link">&laquo;</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&laquo;</a>
+                                </li>
+                                {% endif %}
+                                {% for i in page.paginator.page_range %}
+                                {% if page.number == i %}
+                                <li class="page-item active">
+                                    <a class="page-link">{{i}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item ">
+                                    <a class="page-link" href="?page={{i}}">{{i}}</a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                                {% if page.has_next %}
+                                <li class="page-item ">
+                                    <a href="?page={{page.next_page_number}}" class="page-link">&raquo;</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&raquo;</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+        <a href="{% url 'cart' %}" class="text-light text-center fs-2 bottom-cart" style="bottom:3%;" >
+            <button id="info" class=" text-light text-center fs-2 btn btn-block btn-success text-center fs-4 " data-toggle="modal"
+            data-target="#footerModal"> you have <span class="font-weight-bolder"
+                style="font-size:20px; padding-bottom:20px;">({{order.get_cart_items}})
+            </span>Items in cart click to place your Order</button></a>
+    
+
+    <!-- Modal -->
+    <div class="modal fade bg-secondary" id="cartModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="img-fluid mx-auto d-block " src="{% static 'img/14882.gif' %}">
+                    <p class="text-center"> Adding item to cart</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade bg-secondary" id="footerModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="img-fluid mx-auto d-block " src="{% static 'img/14882.gif' %}">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+{% endblock %}
