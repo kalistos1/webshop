@@ -82,6 +82,18 @@
             display: none;
         }
 
+        .search_form label {
+            display: none;
+        }
+
+
+        .shop_sidebar1 {
+            display: none;
+        }
+        .filter_nav_bar{
+            display: none;
+        }
+
         @media only screen and (max-width: 600px) {
             .shop__sidebar__accordion .card-heading a {
                 color: #111111;
@@ -125,7 +137,7 @@
                 right: 0;
                 padding: 0 15px;
                 top: 0;
-                margin-top: 43%;
+                margin-top: 0%;
                 height: 42px;
             }
 
@@ -142,6 +154,19 @@
             .bottom-cart {
                 padding-bottom: 10px;
             }
+
+            .shop__sidebar {
+                display: none;
+            }
+
+
+            .shop_sidebar1 {
+                display: inline;
+            }
+
+        .filter_nav_bar{
+            display: block;
+        }
         }
     </style>
 </head>
@@ -179,13 +204,10 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
-
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-sm-6 col-6">
@@ -199,8 +221,9 @@
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
                         <a href="#"><img src="img/icon/heart.png" alt=""></a>
                         <div class="form-inline  my-lg-0">
-                            <div data-toggle="modal" data-target="#Modal">
-                                <a href="{% url 'cart' %}">
+                            <div data-toggle="modal"
+                                data-target="{% if order.get_cart_items == 0 %} # {% else %}#Modal {% endif %}">
+                                <a href="{% if order.get_cart_items == 0 %} # {% else %} {% url 'cart' %} {% endif %}">
                                     <img id="cart-icon" src="{% static 'img/cart.png' %}" width=40px>
                                     <span
                                         style="font-size: 16px; margin-left:-10px; margin-top: -20px; border-radius: 80px; padding:5px;"
@@ -222,7 +245,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="col-lg-6 col-md-6 col-sm-6 ">
                     {% url 'store' as store %}
                     {% url 'about' as about %}
                     {% url 'contact' as contact %}
@@ -237,7 +260,6 @@
                         </ul>
                     </nav>
                 </div>
-
             </div>
             <div class="canvas__open"><i class="fa fa-bars"></i></div>
         </div>

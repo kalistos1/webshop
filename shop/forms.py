@@ -10,7 +10,7 @@ class SearchProductForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SearchProductForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs.update({'class' : 'form-control', 'id':'title', 'placeholder':'Search for products'})
+        self.fields['title'].widget.attrs.update({'class' : 'form-control', 'id':'title', 'class':'search_form', 'placeholder':'Search for products'})
 
 
 

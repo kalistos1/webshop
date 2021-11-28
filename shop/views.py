@@ -39,7 +39,23 @@ def Store(request):
        
     }
 	return render(request,'core/index.html', context)
+
     
+def singleProduct(request,pk):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	product = Product.objects.get(pk=pk)
+    
+	context ={
+		'cartItems':cartItems,
+		'order':order,
+		'items':items,
+		'product':product,
+	}
+	return render(request,'core/shop-details.html',context)
+
 
 def Cart(request):
     data = cartData(request)
@@ -150,6 +166,10 @@ def processOrder(request):
 
 
 def ContactUs(request):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
 	if request.method == "POST":
 		contact_form = ContactUsForm(request.POST)
 		if contact_form.is_valid():
@@ -169,12 +189,25 @@ def ContactUs(request):
 		contact_form = ContactUsForm()
 		context = {
 			'contact_form':contact_form,
+			'items':items,
+            'order':order,
+            'cartItems':cartItems,
 		}
 	return render(request, 'core/contact.html', context)
 
 
 def AboutUs(request):
-	return render(request,'core/about.html')
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+
+	context ={
+		'items':items,
+            'order':order,
+            'cartItems':cartItems,
+		}	
+	return render(request,'core/about.html',context)
 
 
 @login_required

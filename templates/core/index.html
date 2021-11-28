@@ -7,14 +7,16 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__text">
-                    <h4>Shop</h4>
+                    <h4>Shop <span class="text-muted"
+                            style="font-size:13px; text-decoration:underline; margin-left:10px;">(Place Your Order and
+                            Checkout Without Payment)</span></h4>
                     <div class="breadcrumb__links">
-                        <a href="./index.html">Home</a>
-                        <span>Shop</span>
+                        <a href="#">Shop</a>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 <!-- Breadcrumb Section End -->
@@ -26,17 +28,178 @@
             <!-- shop filter side bar-->
             {% include '../partials/_filter_sidebar.html' %}
             <!-- ship filter side bar ends-->
-            <div class="col-lg-9 col-sm-9 col-9 ">
+            <div class="col-lg-9 col-sm-9 col-12 ">
+
                 <div class="shop__product__option">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__sidebar__search">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <!--filter bar here-->
+                            <style>
+                                .filter_nav_bar nav ul ul {
+                                    display: none;
+
+                                }
+
+                                .filter_nav_bar nav ul li:hover>ul {
+                                    display: block;
+
+                                }
+
+                                .filter_nav_bar nav ul {
+                                    border-radius: 10px;
+                                    list-style: none;
+                                    position: relative;
+                                    display: inline-table;
+
+                                }
+
+                                .filter_nav_bar nav ul:after {
+                                    content: "";
+                                    clear: both;
+                                    display: block;
+
+                                }
+
+                                .filter_nav_bar nav ul li {
+                                    float: left;
+                                    text-decoration: underline;
+                                }
+
+                                .filter_nav_bar nav ul li:hover {
+                                    background: #4b545f;
+                                    background: linear-gradient(top, #4f5964 0%, #5f6975 40%);
+                                    background: -moz-linear-gradient(top, #4f5964 0%, #5f6975 40%);
+                                    background: -webkit-linear-gradient(top, #4f5964 0%, #5f6975 40%);
+
+
+                                }
+
+                                .filter_nav_bar nav ul li:hover a {
+                                    color: #fff;
+
+                                }
+
+                                .filter_nav_bar nav ul li a {
+                                    display: block;
+                                    padding: 10px 10px;
+                                    color: #757575;
+                                    text-decoration: none;
+
+                                }
+
+                                .filter_nav_bar nav ul ul {
+                                    background: #5f6975;
+                                    border-radius: 0px;
+                                    padding: 0;
+                                    position: absolute;
+                                    top: 100%;
+                                    z-index: 100000000;
+                                }
+
+                                .filter_nav_bar nav ul ul li {
+                                    float: none;
+                                    border-top: 1px solid #6b727c;
+                                    border-bottom: 1px solid #575f6a;
+                                    position: relative;
+                                }
+
+                                .filter_nav_bar nav ul ul li a {
+                                    padding: 10px 20px;
+                                    color: #fff;
+                                }
+
+                                .filter_nav_bar nav ul ul li a:hover {
+                                    background: #4b545f;
+                                }
+
+                                .filter_nav_bar nav ul ul ul {
+                                    position: absolute;
+                                    left: 100%;
+                                    top: 0;
+
+                                }
+                            </style>
+                            <div class="filter_nav_bar">
+                                <nav>
+                                    <ul>
+                                        <li><a href="#" style="font-size: 20; color:#000000; font-weight: 800;"><i class="fa fa-filter" aria-hidden="true"></i>
+                                       filter by </a></li>
+
+                                        <li><a href="#">Category</a>
+                                            <ul>
+                                                <li><a href="#">Men </a></li>
+                                                <li><a href="#">Women </a></li>
+                                                <li><a href="#">Accessories </a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Price</a>
+                                            <ul>
+                                                <li><a href="#">#0 - #50</a></li>
+                                                <li><a href="#">#50 - #100</a></li>
+                                                <li><a href="#">#100 - #150</a></li>
+                                                <li><a href="#">250+</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="#">Size</a>
+                                            <ul>
+                                                <li><a href="#"><label for="xs">xs
+                                                        <input type="radio" id="xs">
+                                                    </label></a>
+                                                </li>
+
+                                                <li><a href="#"><label for="sm">s
+                                                        <input type="radio" id="sm">
+                                                    </label>
+                                                </a>
+                                                </li>
+
+                                                <li><a href="#"><label for="md">m
+                                                        <input type="radio" id="md">
+                                                    </label>
+                                                </a>
+                                                </li>
+
+                                                <li><a href="#"><label for="l">l
+                                                        <input type="radio" id="l">
+                                                    </label>
+                                                    </a>
+                                                </li>
+
+                                                <li><a href="#"><label for="xl">xl
+                                                        <input type="radio" id="xl">
+                                                    </label>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="#">Color</a>
+                                            <ul>
+                                                {% for color in colors %}
+                                                <li class="list-group-item">
+                                                    <input class="filter-checkbox" data-filter="color"
+                                                        value="{{color.color__id}}" type="checkbox" />&nbsp;
+                                                    <button class="btn"
+                                                        style="background-color: {{color.color__color_code}}; margin-top: -5px;"></button>
+                                                </li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12 searchFormIndex">
+                            <div class="shop__sidebar__search shop__sidebar__search">
                                 <nav class="navbar ">
                                     <form action="{% url 'searchproduct' %}" class="form-inline">
                                         <div class="d-flex flex-row">
                                             {% csrf_token %}
                                             <div>
-                                                {{search_form}}
+                                                {{search_form.title}}
                                             </div>
                                             <div>
                                                 <button class="btn btn-secondary text-light form-control"
@@ -45,51 +208,56 @@
                                         </div>
                                     </form>
                                 </nav>
-
                             </div>
                             <div class="shop__product__option__left">
-                                <p>Showing 1–12 of results</p>
+                                <p>Showing results</p>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
 
+                        <div class="col-lg-4 col-md-6 col-sm-6">
                         </div>
+
                     </div>
                 </div>
 
 
                 <div class="row ">
                     {% for product in page.object_list %}
-                    <div class="col-lg-4 col-md-6 col-sm-6 ">
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-6 ">
                         <div class="product__item">
+
                             <div class="product__item__pic set-bg" data-setbg="{{product.imageURL}}">
                                 <ul class="product__hover">
-                                    <li><a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
-                                    <li><a href="#"><img src="{% static 'img/icon/compare.png' %}" alt="">
+                                    <li><a href="{% url 'singleproduct' product.id %}"><img
+                                                src="{% static 'img/icon/heart.png' %}" alt=""></a></li>
+                                    <li><a href="{% url 'singleproduct' product.id %}"><img
+                                                src="{% static 'img/icon/compare.png' %}" alt="">
                                             <span>Compare</span></a>
                                     </li>
                                     <li><a href="#"><img src="{% static 'img/icon/search.png' %}" alt=""></a></li>
                                 </ul>
                             </div>
+
                             <div class="">
                                 <div class="row">
-
                                     <div class="col-12">
-                                        <h6 style="font-weight:700; margin-top:20px; font-size:20px;">{{product.title}}
+                                        <h6 style="font-weight:500; margin-top:20px; font-size:18px;"><a
+                                                href="{% url 'singleproduct' product.id %}"
+                                                class="text-dark">{{product.title}}</a>
                                         </h6>
                                     </div>
 
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <div class="rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <h5 class="text-danger" style="font-weight:700;"># {{product.price}} </h5>
+                                    <div class="col-7">
+                                        <h5 class="text-danger" style="font-weight:500; font-size:18px;">
+                                            #{{product.price}} </h5>
                                     </div>
 
                                     <div class="col-12 d-flex">
@@ -153,17 +321,20 @@
         </div>
     </div>
 
-    
-        <a href="{% url 'cart' %}" class="text-light text-center fs-2 bottom-cart" style="bottom:3%;" >
-            <button id="info" class=" text-light text-center fs-2 btn btn-block btn-success text-center fs-4 " data-toggle="modal"
-            data-target="#footerModal"> you have <span class="font-weight-bolder"
+
+    <a href=" {% if order.get_cart_items == 0 %} # {% else %} {% url 'cart' %} {% endif %}"
+        class="text-light text-center fs-2 bottom-cart" style="bottom:3%;">
+        <button id="info"
+            class=" text-light text-center fs-2 btn btn-block {% if order.get_cart_items > 0 %} btn-danger {% else %}btn-success {% endif %}text-center fs-4 "
+            data-toggle="modal" data-target=" {% if order.get_cart_items == 0 %} # {% else %}#footerModal {% endif %}">
+            you have <span class="font-weight-bolder"
                 style="font-size:20px; padding-bottom:20px;">({{order.get_cart_items}})
             </span>Items in cart click to place your Order</button></a>
-    
+
 
     <!-- Modal -->
     <div class="modal fade bg-secondary" id="cartModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="">
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
